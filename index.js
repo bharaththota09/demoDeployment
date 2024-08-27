@@ -29,7 +29,7 @@ const dbPath = path.join(__dirname, "goodreads.db");
 
 let db = null;
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 const initializeDBAndServer = async () => {
   try {
@@ -46,6 +46,19 @@ const initializeDBAndServer = async () => {
   }
 };
 initializeDBAndServer();
+
+app.get('/all',async(request,response)=>{
+  const allBooksQuery=`select * from book`
+  const dbResponse = await db.all(allBooksQuery)
+  response.send(dbResponse)
+
+})
+
+app.get('/',(request,response)=>{
+  response.send('hi')
+})
+
+
 
 // User Register API
 app.post("/users/", async (request, response) => {
